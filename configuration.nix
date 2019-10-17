@@ -38,8 +38,65 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
+  nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
-     wget vim emacs git mc
+     wget vim mc
+     emacs
+     blender
+     (haskellPackages.ghcWithPackages (ps: with ps;
+       [ tidal ]))
+     gimp
+     gqview
+     vlc
+     mpv
+     evince
+     djview
+     googleearth
+     ktorrent
+     qtox
+     chromium
+     firefox
+     youtube-dl
+     tdesktop
+     tcpdump
+     wireshark-qt
+     irssi
+     nmap
+     telnet
+     autossh
+     gitFull
+     maxima
+     racket
+     octave
+     gdb
+     stellarium
+     gnuplot
+     calibre
+     golly
+     xaos
+     valgrind
+     nodejs
+     binutils
+     global
+     pwgen
+     dstat
+     ncdu
+     sysstat
+     iotop
+     htop
+     lsof
+     pciutils
+     p7zip
+     pbzip2
+     unrar
+     unzip
+     patchelf
+     wine
+     wpa_supplicant_gui
+     anki
+     goldendict
+     spectacle
+     tmux
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -65,13 +122,18 @@
   # sound.enable = true;
   # hardware.pulseaudio.enable = true;
 
-  # Enable the X11 windowing system.
-  # services.xserver.enable = true;
-  # services.xserver.layout = "us";
-  # services.xserver.xkbOptions = "eurosign:e";
+  services.xserver = {
+     enable = true;
+     layout = "us,ru";
+     xkbOptions = "eurosign:e, grp:caps_toggle";
+     
+     # Enable the KDE Desktop Environment.
+     displayManager.sddm.enable = true;
+     desktopManager.plasma5.enable = true;
+  };
 
   # Enable touchpad support.
-  # services.xserver.libinput.enable = true;
+  services.xserver.libinput.enable = true;
 
   # Enable the KDE Desktop Environment.
   # services.xserver.displayManager.sddm.enable = true;
