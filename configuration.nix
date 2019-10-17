@@ -39,65 +39,71 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   nixpkgs.config.allowUnfree = true;
-  environment.systemPackages = with pkgs; [
-     wget vim mc
-     emacs
-     blender
-     (haskellPackages.ghcWithPackages (ps: with ps;
-       [ tidal ]))
-     gimp
-     gqview
-     vlc
-     mpv
-     evince
-     djview
-     googleearth
-     ktorrent
-     qtox
-     chromium
-     firefox
-     youtube-dl
-     tdesktop
-     tcpdump
-     wireshark-qt
-     irssi
-     nmap
-     telnet
-     autossh
-     gitFull
-     maxima
-     racket
-     octave
-     gdb
-     stellarium
-     gnuplot
-     calibre
-     golly
-     xaos
-     valgrind
-     nodejs
-     binutils
-     global
-     pwgen
-     dstat
-     ncdu
-     sysstat
-     iotop
-     htop
-     lsof
-     pciutils
-     p7zip
-     pbzip2
-     unrar
-     unzip
-     patchelf
-     wine
-     wpa_supplicant_gui
-     anki
-     goldendict
-     spectacle
-     tmux
-  ];
+  environment.systemPackages =
+    let packages_list = with pkgs; [
+              wget vim mc
+              emacs
+              blender
+              (haskellPackages.ghcWithPackages (ps: with ps;
+                [ tidal ]))
+              gimp
+              gqview
+              vlc
+              mpv
+              evince
+              djview
+              googleearth
+              ktorrent
+              qtox
+              chromium
+              firefox
+              youtube-dl
+              tdesktop
+              tcpdump
+              wireshark-qt
+              irssi
+              nmap
+              telnet
+              autossh
+              gitFull
+              maxima
+              racket
+              octave
+              gdb
+              stellarium
+              gnuplot
+              calibre
+              golly
+              xaos
+              valgrind
+              nodejs
+              binutils
+              global
+              pwgen
+              dstat
+              ncdu
+              sysstat
+              iotop
+              htop
+              lsof
+              pciutils
+              p7zip
+              pbzip2
+              unrar
+              unzip
+              patchelf
+              wine
+              wpa_supplicant_gui
+              anki
+              goldendict
+              spectacle
+              tmux
+             ];
+      my_packages_closure = pkgs.buildEnv {
+            name = "my_packages";
+            paths = packages_list;
+      };
+  in [ my_packages_closure ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
